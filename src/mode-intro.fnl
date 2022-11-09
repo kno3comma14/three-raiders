@@ -1,35 +1,20 @@
 (local gamestate (require :lib.gamestate))
+
+(local menu-logic (require :gui.menu-logic))
 (local story-screen (require :story))
+
 (love.graphics.setNewFont 30)
 
-(var menu-state {:options {:start {:description "This option starts the game"
+(var menu-state {:options [{:name "Start"
+                                   :description "This option starts the game"
                                    :selected true
-                                   :position 1
                                    :context {}}
-                           :settings {:description "Settings to be used for the game"
-                                      :selected false
-                                      :position 2
-                                      :context {}}
-                           :quit {:description "Leave the game"
+                           {:name "Quit"
+                                  :description "Leave the game"
                                   :selected false
-                                  :position 3
-                                  :context {}}}})
-(local max-index 3)
-(local min-index 1)
-
-(fn select-menu-option [target]
-  (let [option (. menu-state :options target)]
-    (when (not (. option :selected))
-      (tset option :selected true))))
-
-(fn change-option-index [operator index]
-  (let [aux-index (operator index 1)
-        next-option-index (if (< aux-index 1 )
-                              max-index
-                   ´           ())]))
-
-(fn change-menu-option [operator option]
-  (let []))
+                                  :context {}}]
+                 :selected-option 1
+                 :ready-to-draw false})
 
 {:draw (fn draw [self message]
          (local (w h _flags) (love.window.getMode)))
@@ -38,4 +23,8 @@
                (when (= key "escape")
                  (love.event.quit))
                (when (= key "return")
-                 (gamestate.switch story-screen)))}
+                 (tset menu-state :ready-to-draw true))
+               (when (= key "up")
+                 (change-menu-option + (menu-state :selected-option) menu-state))
+               (when (= key "down")
+                 (change-menu-option - (menu-state :selected-option) menu-state)))}
