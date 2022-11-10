@@ -1,41 +1,53 @@
 (local gamestate (require :lib.gamestate))
+
+(local logic (require "gui.menu-logic"))
 (local story-screen (require :story))
-(love.graphics.setNewFont 30)
 
-(var menu-state {:options {:start {:description "This option starts the game"
-                                   :selected true
-                                   :position 1
-                                   :context {}}
-                           :settings {:description "Settings to be used for the game"
-                                      :selected false
-                                      :position 2
-                                      :context {}}
-                           :quit {:description "Leave the game"
-                                  :selected false
-                                  :position 3
-                                  :context {}}}})
-(local max-index 3)
-(local min-index 1)
+(var menu-state {:options [{:name "Start"
+                            :description "This option starts the game"
+                            :selected true
+                            :context {}}
+                           {:name "Quit"
+                            :description "Leave the game"
+                            :selected false
+                            :context {}}]
+                 :selected-option 1
+                 :ready-to-action false})
 
-(fn select-menu-option [target]
-  (let [option (. menu-state :options target)]
-    (when (not (. option :selected))
-      (tset option :selected true))))
+(fn draw-menu [state w h]
+  (for [i 1 (# (. state :options))]
+    (let [main-coords {:x (- (/ w 2) 40) :y (/ h 2)}
+          option (. state :options i)
+          x (. main-coords :x)
+          y (+ (. main-coords :y) (* (- i 1) 30))
+          text (. option :name)]
+      (if (. option :selected)
+          (do
+            (love.graphics.print ">" (- x 30) y)
+            (love.graphics.print "<" (+ x 80) y)
+            (love.graphics.print text x y))
+          (do
+            (love.graphics.print text x y))))))
 
-(fn change-option-index [operator index]
-  (let [aux-index (operator index 1)
-        next-option-index (if (< aux-index 1 )
-                              max-index
-                   ´           ())]))
-
-(fn change-menu-option [operator option]
-  (let []))
-
+;; Game life-cycle
 {:draw (fn draw [self message]
-         (local (w h _flags) (love.window.getMode)))
- :update (fn update [self dt set-mode])
+         (local (w h _flags) (love.window.getMode))
+         (draw-menu menu-state w h))
+ :update (fn update [self dt set-mode]
+           (when (. menu-state :ready-to-action)
+             (let [selected-option (. menu-state :selected-option)
+                   option-name (. menu-state :options selected-option :name)]
+               (print option-name)
+               (when (= option-name "Quit")
+                 (love.event.quit)))))
  :keypressed (fn keypressed [self key set-mode]
-               (when (= key "escape")
-                 (love.event.quit))
                (when (= key "return")
-                 (gamestate.switch story-screen)))}
+                 (tset menu-state :ready-to-action true))
+               (when (= key "up")
+                 (tset menu-state :ready-to-action false)
+                 (logic.change-menu-option (- (. menu-state :selected-option) 1)
+                                           menu-state))
+               (when (= key "down")
+                 (tset menu-state :ready-to-action false)
+                 (logic.change-menu-option (+ (. menu-state :selected-option) 1)
+                                           menu-state)))}
