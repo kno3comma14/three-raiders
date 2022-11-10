@@ -37,7 +37,6 @@
            (when (. menu-state :ready-to-action)
              (let [selected-option (. menu-state :selected-option)
                    option-name (. menu-state :options selected-option :name)]
-               (print option-name)
                (when (= option-name "Quit")
                  (love.event.quit)))))
  :keypressed (fn keypressed [self key set-mode]
