@@ -1,16 +1,13 @@
-(local anim8 (require :lib.anim8.anim8))
+(local anim8 (require :lib.anim8))
+(local images (require :images))
 
-(fn load-image [path]
-  (let [image (love.graphics.newImage path)]
-    (image:setFilter "nearest")
-    image))
+(local knight-sheet (images.load-image "assets/spritesheets/Idle-Sheet.png"))
 
-(local knight-idle-sheet (load-image "assets/spritesheets/Idle-Sheet.png"))
-(local grid (anim8.newGrid 32 32 (knight-idle-sheet:getWidth) (knight-idle-sheet:getHeight)))
+(local grid (anim8.newGrid 32 32 (knight-sheet:getWidth) (knight-sheet:getHeight)))
 (local animation (anim8.newAnimation (grid "1-4" 1) 0.1))
 
 {:animation animation
- :knight-idle-sheet knight-idle-sheet}
+ :knight-sheet knight-sheet}
 
 
 
