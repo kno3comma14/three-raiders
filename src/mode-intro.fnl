@@ -1,4 +1,5 @@
 (local gamestate (require :lib.gamestate))
+(local animations (require :animations))
 
 (local logic (require "gui.menu-logic"))
 (local story-screen (require :story))
@@ -32,14 +33,17 @@
 ;; Game life-cycle
 {:draw (fn draw [self message]
          (local (w h _flags) (love.window.getMode))
-         (draw-menu menu-state w h))
+         (draw-menu menu-state w h)
+         ;(animations.animation:draw animations.knight-sheet 100 200)
+         )
  :update (fn update [self dt set-mode]
            (when (. menu-state :ready-to-action)
              (let [selected-option (. menu-state :selected-option)
                    option-name (. menu-state :options selected-option :name)]
-               (print option-name)
                (when (= option-name "Quit")
-                 (love.event.quit)))))
+                 (love.event.quit))))
+           ;(animations.animation:update dt)
+           )
  :keypressed (fn keypressed [self key set-mode]
                (when (= key "return")
                  (tset menu-state :ready-to-action true))
