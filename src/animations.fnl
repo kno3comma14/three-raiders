@@ -12,18 +12,18 @@
 (local priest-grid (anim8.newGrid 32 32 (priest-sheet:getWidth) (priest-sheet:getHeight)))
 
 ;; Creating animations
-(local knight-idle-animation (anim8.newAnimation (grid "1-4" 1) 0.1))
-(local knight-run-animation (anim8.newAnimation (grid "5-7" 1) 0.1))
-(local knight-attack-animation (anim8.newAnimation (grid "8-12" 1) 0.1))
-(local knight-special-animation (anim8.newAnimation (grid "13-18" 1) 0.1))
+(local knight-idle-animation (anim8.newAnimation (knight-grid "1-4" 1) 0.1))
+(local knight-run-animation (anim8.newAnimation (knight-grid "5-7" 1) 0.1))
+(local knight-attack-animation (anim8.newAnimation (knight-grid "8-12" 1) 0.1))
+(local knight-special-animation (anim8.newAnimation (knight-grid "13-18" 1) 0.1))
 
-(local ranger-idle-animation (anim8.newAnimation (grid "1-4" 1) 0.1))
-(local ranger-run-animation (anim8.newAnimation (grid "5-7" 1) 0.1))
-(local ranger-attack-animation (anim8.newAnimation (grid "8-13" 1) 0.1))
+(local ranger-idle-animation (anim8.newAnimation (ranger-grid "1-4" 1) 0.1))
+(local ranger-run-animation (anim8.newAnimation (ranger-grid "5-7" 1) 0.1))
+(local ranger-attack-animation (anim8.newAnimation (ranger-grid "8-13" 1) 0.1))
 
-(local priest-idle-animation (anim8.newAnimation (grid "1-4" 1) 0.1))å
-(local priest-run-animation (anim8.newAnimation (grid "5-7" 1) 0.1))
-(local priest-attack-animation (anim8.newAnimation (grid "8-14" 1) 0.1))
+(local priest-idle-animation (anim8.newAnimation (priest-grid "1-4" 1) 0.1))
+(local priest-run-animation (anim8.newAnimation (priest-grid "5-7" 1) 0.1))
+(local priest-attack-animation (anim8.newAnimation (priest-grid "8-14" 1) 0.1))
 
 
 ;; Registering animations
