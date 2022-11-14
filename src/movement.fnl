@@ -36,7 +36,7 @@
 
 (fn move-heroes-party [heroe-reference heroe-one heroe-two p1 p2]
   (local default-distance 40)
-  (move-heroes-reference heroe-reference)
+  (move-heroes-reference heroe-reference p1 p2)
   (let [actual-reference-position-x (. heroe-reference :position :x)
         actual-reference-position-y (. heroe-reference :position :y)
         heroe-one-position-x (- actual-reference-position default-distance)
