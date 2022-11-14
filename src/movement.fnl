@@ -28,9 +28,9 @@
 (fn move-heroes-reference [heroe-reference p1 p2]
   (let [actual-position-x (. heroe-reference :position :x)
         actual-position-y (. heroe-reference :position :y)
-        angle 0
-        new-position-x (+ actual-position-x (* (math.cos (+ angle (/ math.pi 2))) (. heroe-reference :velocity :y)))
-        new-position-y (+ actual-position-y (* (math.sin (+ angle (/ math.pi 2))) (. heroe-reference :velocity :y)))]
+        new-position-x (+ actual-position-x (* (. heroe-reference :speed) dt))
+        new-position-y (+ actual-position-y (* (. heroe-reference :speed) dt))]
     (when (is-heroe-inside-limits new-position-x new-position-y p1 p2)
-      (tset heroe-reference :position :x new-position-x)
-      (tset heroe-reference :position :y new-position-y)))
+      (tset heroe-reference :position {:x new-position-x :y new-position-y}))))
+
+(fn move-heroes-party [heroe-reference heroe-one heroe-two p1 p2])
