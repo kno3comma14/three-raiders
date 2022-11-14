@@ -26,7 +26,7 @@
          (> heroes-x (. p1 :x))
          (> heroes-y (. p1 :y)))))
 
-(fn move-heroes-reference [heroe-reference p1 p2]
+(fn move-heroes-reference [heroe-reference p1 p2 dt]
   (let [actual-position-x (. heroe-reference :position :x)
         actual-position-y (. heroe-reference :position :y)
         new-position-x (+ actual-position-x (* (. heroe-reference :speed) dt))
@@ -36,7 +36,7 @@
 
 (fn move-heroes-party [heroe-reference heroe-one heroe-two p1 p2]
   (local default-distance 40)
-  (move-heroes-reference heroe-reference p1 p2)
+  (move-heroes-reference heroe-reference p1 p2 dt)
   (let [actual-reference-position-x (. heroe-reference :position :x)
         actual-reference-position-y (. heroe-reference :position :y)
         heroe-one-position-x (- actual-reference-position default-distance)
@@ -44,4 +44,6 @@
         heroe-two-position-x (+ actual-reference-position default-distance)
         heroe-two-position-y (+ actual-reference-position default-distance)]
     (tset heroe-one :position {:x heroe-one-position-x :y heroe-one-position-y})
-    (tset heroe-two :position {:x heroe-two-position-x :y heroe-two-position-y})))
+    (tset heroe-two :position {:x heroe-two-position-x :y heroe-two-position-y})
+    (move-heroes-reference heroe-one p1 p2 dt)
+    (move-heroes-reference heroe-two p1 p2 dt)))
